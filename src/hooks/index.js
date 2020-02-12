@@ -13,6 +13,6 @@ export {
   useAPIDefaultProps,
   isApiError,
   getApiErrorMessage,
-  mergeApiParams,
+  mergeAPIParams,
   getAPICallStatus
 } from "./useAPI";

@@ -5,7 +5,7 @@ import {
   useAuth,
   useAPI,
   useAPIPropTypes,
-  mergeApiParams,
+  mergeAPIParams,
   getAPICallStatus
 } from "../../hooks";
 
@@ -38,7 +38,7 @@ const Subscriptions = props => {
   const [results, setResults] = useState({});
   const [message, setMessage] = useState("No message");
 
-  const params = mergeApiParams({
+  const params = mergeAPIParams({
     requestProps: apiCall,
     requestLiveProps: {
       params: { init: { body: JSON.stringify({ token: token }) } }

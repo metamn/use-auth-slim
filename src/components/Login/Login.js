@@ -7,7 +7,7 @@ import {
   useAPIPropTypes,
   isApiError,
   getApiErrorMessage,
-  mergeApiParams
+  mergeAPIParams
 } from "../../hooks";
 
 /**
@@ -46,7 +46,7 @@ const Login = props => {
   const [results, setResults] = useState({});
   const [message, setMessage] = useState("No message");
 
-  const params = mergeApiParams({ requestProps: apiCall });
+  const params = mergeAPIParams({ requestProps: apiCall });
   const { data } = useAPI(params);
 
   useEffect(() => {

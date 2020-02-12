@@ -4,7 +4,7 @@ export {
   useAPIDefaultProps,
   isApiError,
   getApiErrorMessage,
-  mergeApiParams,
+  mergeAPIParams,
   getApiToken,
   getAPICallStatus
 } from "./useAPI";

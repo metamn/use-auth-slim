@@ -99,7 +99,7 @@ const getAPICallStatus = data => {
  * - requestProps - the request specific props, usually defined in the caller component's PropTypes
  * - requestLiveProps - the request specific props which, defined inside the component
  */
-const mergeApiParams = props => {
+const mergeAPIParams = props => {
   const { requestProps, requestLiveProps } = props;
 
   return mergeDeep(
@@ -167,7 +167,7 @@ export {
   isApiError,
   getApiErrorMessage,
   getApiToken,
-  mergeApiParams,
+  mergeAPIParams,
   getAPICallStatus,
   propTypes as useAPIPropTypes,
   defaultProps as useAPIDefaultProps
