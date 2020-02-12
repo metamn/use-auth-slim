@@ -7,3 +7,11 @@ export {
   getUseDataHookProps,
   getUseDataInitialValue
 } from "./useData";
+export {
+  default as useAPI,
+  useAPIPropTypes,
+  useAPIDefaultProps,
+  isApiError,
+  getApiErrorMessage,
+  mergeApiParams
+} from "./useAPI";
