@@ -5,9 +5,8 @@ import {
   useAuth,
   useAPI,
   useAPIPropTypes,
-  isApiError,
-  getApiErrorMessage,
-  mergeApiParams
+  mergeApiParams,
+  getAPICallStatus
 } from "../../hooks";
 
 /**
@@ -23,12 +22,7 @@ const propTypes = {
 const defaultProps = {
   apiCall: {
     path: {
-      endpoint: "subscription.php"
-    },
-    params: {
-      queryParams: {
-        action: "list"
-      }
+      endpoint: "subscription.php?action=list"
     },
     defaultData: "Loading subscriptions"
   }
@@ -54,11 +48,12 @@ const Subscriptions = props => {
   const { data } = useAPI(params);
 
   useEffect(() => {
-    if (isApiError(data)) {
-      setMessage(getApiErrorMessage(data));
-    } else {
+    const { successful, message } = getAPICallStatus(data);
+
+    setMessage(message);
+
+    if (successful) {
       setResults(data);
-      setMessage("API request was successful");
     }
   }, [data]);
 

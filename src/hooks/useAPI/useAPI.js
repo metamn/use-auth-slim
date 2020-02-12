@@ -47,7 +47,6 @@ const isApiError = data => {
 
 /**
  * Returns the error message from the response
- *
  */
 const getApiErrorMessage = data => {
   return data?.user_message;
@@ -55,10 +54,43 @@ const getApiErrorMessage = data => {
 
 /**
  * Returns the token from the response
- *
  */
 const getApiToken = data => {
   return data?.token;
+};
+
+/**
+ * Checks is the API call was made.
+ *
+ * - Sometimes the underlying data library doesn't makes the API call.
+ * - Maybe because of caching, or other errors
+ */
+const wasApiCallMade = data => {
+  return data !== undefined;
+};
+
+/**
+ * Returns the API call status
+ */
+const getAPICallStatus = data => {
+  if (!wasApiCallMade(data)) {
+    return {
+      successful: false,
+      message: "No API call was made. Please try again later."
+    };
+  }
+
+  if (isApiError(data)) {
+    return {
+      successful: false,
+      message: getApiErrorMessage(data)
+    };
+  }
+
+  return {
+    successful: true,
+    message: "API request was successful"
+  };
 };
 
 /**
@@ -93,7 +125,7 @@ const fetcher = async ({ props }) => {
   const pathToResource = `${url}/${version}/${endpoint}${encodedQueryParams}`;
 
   console.log("init:", init);
-  const response = await fetch(pathToResource);
+  const response = await fetch(pathToResource, init);
 
   /**
    * With this API (Finster) we just simply return the response
@@ -136,6 +168,7 @@ export {
   getApiErrorMessage,
   getApiToken,
   mergeApiParams,
+  getAPICallStatus,
   propTypes as useAPIPropTypes,
   defaultProps as useAPIDefaultProps
 };

@@ -5,5 +5,6 @@ export {
   isApiError,
   getApiErrorMessage,
   mergeApiParams,
-  getApiToken
+  getApiToken,
+  getAPICallStatus
 } from "./useAPI";
