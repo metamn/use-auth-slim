@@ -7,11 +7,14 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 
 import useLocalStorage from "../../../useLocalStorage";
+import { getApiToken } from "../../../useAPI";
 
 /**
- * Defines the prop types
+ * Defines the prop types for the return values
+ *
+ * - Just fyi ...
  */
-const propTypes = {
+const returnTypes = {
   /**
    * Tells if the user is authenticated
    */
@@ -39,9 +42,9 @@ const propTypes = {
 };
 
 /**
- * Defines the default props
+ * Defines the default return values
  */
-const defaultProps = {
+const defaultReturns = {
   isAuthenticated: false,
   user: {},
   token: "",
@@ -59,7 +62,7 @@ const useAuthFinster = props => {
     token: tokenFromProps,
     message: messageFromProps,
     strategy
-  } = defaultProps;
+  } = defaultReturns;
 
   /**
    * Checks local storage if the user is authenticated already
@@ -92,10 +95,23 @@ const useAuthFinster = props => {
    */
   const [message, setMessage] = useState(messageFromProps);
 
-  return { isAuthenticated, token, message, strategy };
-};
+  /**
+   * Defines the login function
+   *
+   * - `data` is the result of the login API call
+   */
+  const login = data => {
+    console.log("data:", data);
+    const newToken = getApiToken(data);
+    if (newToken) {
+      setToken(newToken);
+      setMessage("Login successful");
+      setIsAuthenticated(true);
+      setIsAuthenticatedLocalStorage(true);
+    }
+  };
 
-useAuthFinster.propTypes = propTypes;
-useAuthFinster.defaultProps = defaultProps;
+  return { isAuthenticated, token, message, login, strategy };
+};
 
 export { useAuthFinster };

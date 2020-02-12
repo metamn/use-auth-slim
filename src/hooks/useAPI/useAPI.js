@@ -54,6 +54,14 @@ const getApiErrorMessage = data => {
 };
 
 /**
+ * Returns the token from the response
+ *
+ */
+const getApiToken = data => {
+  return data?.token;
+};
+
+/**
  * Deep merges various API props to form the final params
  *
  * - requestProps - the request specific props, usually defined in the caller component's PropTypes
@@ -126,6 +134,7 @@ export default useAPI;
 export {
   isApiError,
   getApiErrorMessage,
+  getApiToken,
   mergeApiParams,
   propTypes as useAPIPropTypes,
   defaultProps as useAPIDefaultProps

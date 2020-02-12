@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import {
+  useAuth,
   useAPI,
   useAPIPropTypes,
   isApiError,
@@ -40,6 +41,8 @@ const defaultProps = {
 const Login = props => {
   const { apiCall } = props;
 
+  const { login } = useAuth();
+
   const [results, setResults] = useState({});
   const [message, setMessage] = useState("No message");
 
@@ -51,6 +54,7 @@ const Login = props => {
       setMessage(getApiErrorMessage(data));
     } else {
       setResults(data);
+      login(data);
       setMessage("API request was successful");
     }
   }, [data]);

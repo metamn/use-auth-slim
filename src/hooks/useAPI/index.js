@@ -4,5 +4,6 @@ export {
   useAPIDefaultProps,
   isApiError,
   getApiErrorMessage,
-  mergeApiParams
+  mergeApiParams,
+  getApiToken
 } from "./useAPI";
