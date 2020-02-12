@@ -104,9 +104,28 @@ const useAuthFinster = props => {
     const newToken = getApiToken(data);
     if (newToken) {
       setToken(newToken);
-      setMessage("Login successful");
+      setMessage("Successful login");
       setIsAuthenticated(true);
       setIsAuthenticatedLocalStorage(true);
+    } else {
+      setMessage("Unsuccessful login");
+    }
+  };
+
+  /**
+   * Defines the register function
+   *
+   * - `data` is the result of the login API call
+   */
+  const register = data => {
+    const newToken = getApiToken(data);
+    if (newToken) {
+      setToken(newToken);
+      setMessage("Successful registration");
+      setIsAuthenticated(true);
+      setIsAuthenticatedLocalStorage(true);
+    } else {
+      setMessage("Unsuccessful registration");
     }
   };
 
@@ -117,10 +136,10 @@ const useAuthFinster = props => {
     setToken(tokenFromProps);
     setIsAuthenticated(false);
     setIsAuthenticatedLocalStorage(false);
-    setMessage("Logout successful");
+    setMessage("Successful logout");
   };
 
-  return { isAuthenticated, token, message, login, logout, strategy };
+  return { isAuthenticated, token, message, login, logout, register, strategy };
 };
 
 export { useAuthFinster };

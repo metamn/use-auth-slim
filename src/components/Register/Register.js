@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import {
+  useAuth,
   useAPI,
   useAPIPropTypes,
   isApiError,
@@ -26,8 +27,8 @@ const defaultProps = {
     },
     params: {
       queryParams: {
-        name: "test2",
-        email: "test2@test.com",
+        name: "test3",
+        email: "test3@test.com",
         password: "test12345",
         recaptcha_ignore: "293kwlxh"
       }
@@ -42,6 +43,8 @@ const defaultProps = {
 const Register = props => {
   const { apiCall } = props;
 
+  const { register } = useAuth();
+
   const [results, setResults] = useState({});
   const [message, setMessage] = useState("No message");
 
@@ -53,6 +56,7 @@ const Register = props => {
       setMessage(getApiErrorMessage(data));
     } else {
       setResults(data);
+      register(data);
       setMessage("API request was successful");
     }
   }, [data]);
