@@ -1,7 +1,9 @@
 import React from "react";
 
+import { AuthProvider } from "./hooks";
+
 const App = () => {
-  return "App";
+  return <AuthProvider strategy="none">"App"</AuthProvider>;
 };
 
 export default App;
