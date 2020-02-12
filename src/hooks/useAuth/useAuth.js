@@ -16,6 +16,11 @@ import React, { useContext, createContext } from "react";
 import { authDefault } from "./strategies/authDefault";
 
 /**
+ * Imports a real strategy which will be used
+ */
+import { authFinster } from "./strategies/authFinster";
+
+/**
  * Manages the authentication.
  *
  * - Returns the isAuthenticated flag, the user object and the auth methods
@@ -23,8 +28,11 @@ import { authDefault } from "./strategies/authDefault";
  */
 const useAuthStrategy = strategy => {
   const defaultStrategy = authDefault();
+  const finsterStrategy = authFinster();
 
   switch (strategy) {
+    case "finster":
+      return finsterStrategy;
     case "none":
     default:
       return defaultStrategy;
