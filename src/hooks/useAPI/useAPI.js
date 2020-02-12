@@ -60,7 +60,7 @@ const getApiToken = data => {
 };
 
 /**
- * Checks is the API call was made.
+ * Checks if the API call was made.
  *
  * - Sometimes the underlying data library doesn't makes the API call.
  * - Maybe because of caching, or other errors
@@ -70,7 +70,7 @@ const wasApiCallMade = data => {
 };
 
 /**
- * Returns the API call status
+ * Returns the API call status and a message
  */
 const getAPICallStatus = data => {
   if (!wasApiCallMade(data)) {
