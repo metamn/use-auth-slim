@@ -22,7 +22,7 @@ const defaultProps = {};
  * Displays the component
  */
 const Home = props => {
-  const { isAuthenticated, token, message, strategy } = useAuth();
+  const { isAuthenticated, token, message, strategy, logout } = useAuth();
 
   return (
     <div className="Home">
@@ -42,7 +42,9 @@ const Home = props => {
             <Link to="/login">Login</Link>
           </li>
           <li>
-            <Link to="/logout">Logout</Link>
+            <Link to="/logout" onClick={() => logout()}>
+              Logout
+            </Link>
           </li>
           <li>
             <Link to="/register">Register</Link>
@@ -55,7 +57,6 @@ const Home = props => {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/logout">xxx</Route>
           <Route path="/register">
             <Register />
           </Route>

@@ -101,7 +101,6 @@ const useAuthFinster = props => {
    * - `data` is the result of the login API call
    */
   const login = data => {
-    console.log("data:", data);
     const newToken = getApiToken(data);
     if (newToken) {
       setToken(newToken);
@@ -111,7 +110,17 @@ const useAuthFinster = props => {
     }
   };
 
-  return { isAuthenticated, token, message, login, strategy };
+  /**
+   * Defines the logout function
+   */
+  const logout = () => {
+    setToken(tokenFromProps);
+    setIsAuthenticated(false);
+    setIsAuthenticatedLocalStorage(false);
+    setMessage("Logout successful");
+  };
+
+  return { isAuthenticated, token, message, login, logout, strategy };
 };
 
 export { useAuthFinster };
