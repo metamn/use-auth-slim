@@ -50,11 +50,11 @@ const Subscriptions = props => {
   useEffect(() => {
     const { successful, message } = getAPICallStatus(data);
 
-    setMessage(message);
-
     if (successful) {
       setResults(data);
     }
+
+    setMessage(message);
   }, [data]);
 
   return (

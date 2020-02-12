@@ -5,8 +5,7 @@ import {
   useAuth,
   useAPI,
   useAPIPropTypes,
-  isApiError,
-  getApiErrorMessage,
+  getAPICallStatus,
   mergeAPIParams
 } from "../../hooks";
 
@@ -52,13 +51,14 @@ const Register = props => {
   const { data } = useAPI(params);
 
   useEffect(() => {
-    if (isApiError(data)) {
-      setMessage(getApiErrorMessage(data));
-    } else {
+    const { successful, message } = getAPICallStatus(data);
+
+    if (successful) {
       setResults(data);
       register(data);
-      setMessage("API request was successful");
     }
+
+    setMessage(message);
   }, [data]);
 
   return (
