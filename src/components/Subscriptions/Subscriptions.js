@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import {
+  useAuth,
   useAPI,
   useAPIPropTypes,
   isApiError,
@@ -38,7 +39,7 @@ const defaultProps = {
  */
 const Subscriptions = props => {
   const { apiCall } = props;
-  const token = "Should come from auth";
+  const { token } = useAuth();
 
   const [results, setResults] = useState({});
   const [message, setMessage] = useState("No message");
