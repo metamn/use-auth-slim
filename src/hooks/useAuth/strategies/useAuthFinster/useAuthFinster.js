@@ -45,7 +45,7 @@ const defaultProps = {
   isAuthenticated: false,
   user: {},
   token: "",
-  message: "Just for demo purposes",
+  message: "The finster auth strategy",
   strategy: "finster",
   localStorageKey: "localStorageKey"
 };
