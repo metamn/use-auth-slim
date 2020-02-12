@@ -22,7 +22,12 @@ const propTypes = {
 const defaultProps = {
   apiCall: {
     path: {
-      endpoint: "subscription.php?action=list"
+      endpoint: "subscription.php"
+    },
+    params: {
+      queryParams: {
+        action: "list"
+      }
     },
     defaultData: "Loading subscriptions"
   }
@@ -41,7 +46,7 @@ const Subscriptions = props => {
   const params = mergeAPIParams({
     requestProps: apiCall,
     requestLiveProps: {
-      params: { init: { body: JSON.stringify({ token: token }) } }
+      params: { queryParams: { token: token } }
     }
   });
 

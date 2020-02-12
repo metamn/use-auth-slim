@@ -124,8 +124,8 @@ const fetcher = async ({ props }) => {
     : "";
   const pathToResource = `${url}/${version}/${endpoint}${encodedQueryParams}`;
 
-  console.log("init:", init);
-  const response = await fetch(pathToResource, init);
+  // TODO: `init` won't work as the 2nd param
+  const response = await fetch(pathToResource);
 
   /**
    * With this API (Finster) we just simply return the response
