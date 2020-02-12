@@ -92,7 +92,7 @@ const fetcher = async ({ props }) => {
     : "";
   const pathToResource = `${url}/${version}/${endpoint}${encodedQueryParams}`;
 
-  // TODO: With the second argument (init) fetch is not working
+  console.log("init:", init);
   const response = await fetch(pathToResource);
 
   /**

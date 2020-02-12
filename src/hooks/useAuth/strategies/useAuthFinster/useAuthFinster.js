@@ -38,7 +38,11 @@ const returnTypes = {
   /**
    * Defines the key for storing auth status in local storage
    */
-  localStorageKey: PropTypes.string
+  localStorageKeyAuth: PropTypes.string,
+  /**
+   * Defines the key for storing the token in local storage
+   */
+  localStorageKeyToken: PropTypes.string
 };
 
 /**
@@ -50,7 +54,8 @@ const defaultReturns = {
   token: "",
   message: "The finster auth strategy",
   strategy: "finster",
-  localStorageKey: "localStorageKey"
+  localStorageKeyAuth: "localStorageKeyAuth",
+  localStorageKeyToken: "localStorageKeyToken"
 };
 
 /**
@@ -58,7 +63,8 @@ const defaultReturns = {
  */
 const useAuthFinster = props => {
   const {
-    localStorageKey,
+    localStorageKeyAuth,
+    localStorageKeyToken,
     token: tokenFromProps,
     message: messageFromProps,
     strategy
@@ -70,7 +76,15 @@ const useAuthFinster = props => {
   const [
     isAuthenticatedLocalStorage,
     setIsAuthenticatedLocalStorage
-  ] = useLocalStorage(localStorageKey, false);
+  ] = useLocalStorage(localStorageKeyAuth, false);
+
+  /**
+   * Checks local storage if the token is saved
+   */
+  const [tokenLocalStorage, setTokenLocalStorage] = useLocalStorage(
+    localStorageKeyToken,
+    tokenFromProps
+  );
 
   /**
    * Manages auth state
@@ -84,9 +98,9 @@ const useAuthFinster = props => {
   /**
    * Manages the token
    *
-   * - First it is populated with the value from the props
+   * - First it is populated with the value from the local storage
    */
-  const [token, setToken] = useState(tokenFromProps);
+  const [token, setToken] = useState(tokenLocalStorage);
 
   /**
    * Manages the status message
@@ -103,10 +117,11 @@ const useAuthFinster = props => {
   const login = data => {
     const newToken = getApiToken(data);
     if (newToken) {
+      setTokenLocalStorage(newToken);
       setToken(newToken);
-      setMessage("Successful login");
-      setIsAuthenticated(true);
       setIsAuthenticatedLocalStorage(true);
+      setIsAuthenticated(true);
+      setMessage("Successful login");
     } else {
       setMessage("Unsuccessful login");
     }
@@ -120,10 +135,11 @@ const useAuthFinster = props => {
   const register = data => {
     const newToken = getApiToken(data);
     if (newToken) {
+      setTokenLocalStorage(newToken);
       setToken(newToken);
-      setMessage("Successful registration");
-      setIsAuthenticated(true);
       setIsAuthenticatedLocalStorage(true);
+      setIsAuthenticated(true);
+      setMessage("Successful registration");
     } else {
       setMessage("Unsuccessful registration");
     }
@@ -133,6 +149,7 @@ const useAuthFinster = props => {
    * Defines the logout function
    */
   const logout = () => {
+    setTokenLocalStorage(tokenFromProps);
     setToken(tokenFromProps);
     setIsAuthenticated(false);
     setIsAuthenticatedLocalStorage(false);
