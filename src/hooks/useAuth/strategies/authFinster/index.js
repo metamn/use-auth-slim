@@ -1,1 +1,0 @@
-export { authFinster } from "./authFinster";

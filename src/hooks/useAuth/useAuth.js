@@ -18,7 +18,7 @@ import { authDefault } from "./strategies/authDefault";
 /**
  * Imports a real strategy which will be used
  */
-import { authFinster } from "./strategies/authFinster";
+import { useAuthFinster } from "./strategies/useAuthFinster";
 
 /**
  * Manages the authentication.
@@ -28,7 +28,7 @@ import { authFinster } from "./strategies/authFinster";
  */
 const useAuthStrategy = strategy => {
   const defaultStrategy = authDefault();
-  const finsterStrategy = authFinster();
+  const finsterStrategy = useAuthFinster();
 
   switch (strategy) {
     case "finster":
