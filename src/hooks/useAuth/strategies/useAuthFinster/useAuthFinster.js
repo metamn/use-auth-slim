@@ -3,7 +3,7 @@
  *
  * @see useAuthFinster.md for details
  */
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 
 import useLocalStorage from "../../../useLocalStorage";
@@ -16,17 +16,17 @@ import { getApiToken } from "../../../useAPI";
  */
 const returnTypes = {
   /**
-   * Tells if the user is authenticated
-   */
-  isAuthenticated: PropTypes.bool,
-  /**
-   * Returns the user object
-   */
-  user: PropTypes.object,
-  /**
    * Returns an authentication token
    */
   token: PropTypes.string,
+  /**
+   * Defines the key for storing the token in local storage
+   */
+  localStorageKeyToken: PropTypes.string,
+  /**
+   * Tells if the user is authenticated
+   */
+  isAuthenticated: PropTypes.bool,
   /**
    * Returns a status message
    */
@@ -34,28 +34,18 @@ const returnTypes = {
   /**
    * The authentication strategy
    */
-  strategy: PropTypes.string,
-  /**
-   * Defines the key for storing auth status in local storage
-   */
-  localStorageKeyAuth: PropTypes.string,
-  /**
-   * Defines the key for storing the token in local storage
-   */
-  localStorageKeyToken: PropTypes.string
+  strategy: PropTypes.string
 };
 
 /**
  * Defines the default return values
  */
 const defaultReturns = {
-  isAuthenticated: false,
-  user: {},
   token: "",
+  localStorageKeyToken: "localStorageKeyToken",
+  isAuthenticated: false,
   message: "The finster auth strategy",
-  strategy: "finster",
-  localStorageKeyAuth: "localStorageKeyAuth",
-  localStorageKeyToken: "localStorageKeyToken"
+  strategy: "finster"
 };
 
 /**
@@ -63,44 +53,41 @@ const defaultReturns = {
  */
 const useAuthFinster = props => {
   const {
-    localStorageKeyAuth,
     localStorageKeyToken,
-    token: tokenFromProps,
     message: messageFromProps,
+    token: tokenFromProps,
     strategy
   } = defaultReturns;
 
   /**
-   * Checks local storage if the user is authenticated already
+   * Loads the default return values
+   *
+   * - Tries to derive `token` and `isAuthenticated` from `tokenLocalStorage`
+   * - But it was impossible:
+   * 	- `useLocalStorage` doesn't behaves like `useState` so token has to be saved separately into a state variable
+   * 	- isAuthenticatedRef.current is updated by `useEffect` but an older value is returned at the end:
+   * 	return { isAuthenticated: isAuthenticatedRef.current, ...}
    */
-  const [
-    isAuthenticatedLocalStorage,
-    setIsAuthenticatedLocalStorage
-  ] = useLocalStorage(localStorageKeyAuth, false);
+  const isAuthenticatedRef = useRef(false);
 
   /**
-   * Checks local storage if the token is saved
+   * Manages the token
+   *
+   * - The token is saved into local storage
    */
   const [tokenLocalStorage, setTokenLocalStorage] = useLocalStorage(
     localStorageKeyToken,
     tokenFromProps
   );
 
-  /**
-   * Manages auth state
-   *
-   * - First it is populated with the value from the local storage
-   */
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    isAuthenticatedLocalStorage
-  );
+  const [token, setToken] = useState(tokenLocalStorage);
 
   /**
-   * Manages the token
-   *
-   * - First it is populated with the value from the local storage
+   * Updates the retun values on token change
    */
-  const [token, setToken] = useState(tokenLocalStorage);
+  useEffect(() => {
+    isAuthenticatedRef.current = token !== tokenFromProps;
+  }, [token]);
 
   /**
    * Manages the status message
@@ -119,8 +106,6 @@ const useAuthFinster = props => {
     if (newToken) {
       setTokenLocalStorage(newToken);
       setToken(newToken);
-      setIsAuthenticatedLocalStorage(true);
-      setIsAuthenticated(true);
       setMessage("Successful login");
     } else {
       setMessage("Unsuccessful login");
@@ -137,8 +122,6 @@ const useAuthFinster = props => {
     if (newToken) {
       setTokenLocalStorage(newToken);
       setToken(newToken);
-      setIsAuthenticatedLocalStorage(true);
-      setIsAuthenticated(true);
       setMessage("Successful registration");
     } else {
       setMessage("Unsuccessful registration");
@@ -151,12 +134,18 @@ const useAuthFinster = props => {
   const logout = () => {
     setTokenLocalStorage(tokenFromProps);
     setToken(tokenFromProps);
-    setIsAuthenticated(false);
-    setIsAuthenticatedLocalStorage(false);
     setMessage("Successful logout");
   };
 
-  return { isAuthenticated, token, message, login, logout, register, strategy };
+  return {
+    isAuthenticated: isAuthenticatedRef.current,
+    token,
+    message,
+    login,
+    logout,
+    register,
+    strategy
+  };
 };
 
 export { useAuthFinster };
