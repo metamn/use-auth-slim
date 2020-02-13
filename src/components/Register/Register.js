@@ -59,7 +59,7 @@ const Register = props => {
     }
 
     setMessage(message);
-  }, [data]);
+  }, [data, register]);
 
   return (
     <div className="Register">

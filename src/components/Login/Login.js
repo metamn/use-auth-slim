@@ -57,7 +57,7 @@ const Login = props => {
     }
 
     setMessage(message);
-  }, [data]);
+  }, [data, login]);
 
   return (
     <div className="Login">
