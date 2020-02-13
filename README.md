@@ -4,7 +4,7 @@ React hook for authentication, the slim version
 
 ## The original version
 
-[use-auth](https://github.com/metamn/use-auth) is built on [use-data](https://github.com/metamn/use-data) and it's verbose. This hook is built on [use-api](https://github.com/metamn/use-auth) giving a more readable, easier to use code.
+The predecessor, [use-auth](https://github.com/metamn/use-auth) was built on [use-data](https://github.com/metamn/use-data) and it's verbose. This hook is built on [use-api](https://github.com/metamn/use-auth) giving a more readable, easier to use code.
 
 ## This project
 
@@ -17,4 +17,4 @@ Gives you the authentication hook with the API hook strategy (see them in `/src/
 
 ## Documentation
 
-See the [strategy docs](.src/hooks/useAuth/strategies/useAuthFinster/useAuthFinster.md) for details.
+See the [strategy docs](./src/hooks/useAuth/strategies/useAuthFinster/useAuthFinster.md) for details.
