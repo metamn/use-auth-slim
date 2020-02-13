@@ -1,5 +1,5 @@
 /**
- * The default authentication strategy
+ * A special authentication strategy
  *
  * @see useAuthFinster.md for details
  */
